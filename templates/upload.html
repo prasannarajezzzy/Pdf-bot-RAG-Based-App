@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Upload PDF</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header text-center">
+              <h1 class="h3 mb-0">Upload PDF</h1>
+            </div>
+            <div class="card-body">
+              <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="file">Select PDF file to upload</label>
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="file"
+                    name="file"
+                    accept=".pdf"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="embedding">Select Embedding Type</label>
+                  <select class="form-control" id="embedding" name="embedding">
+                    <option value="all-MiniLM-L6-v2">all-MiniLM-L6-v2</option>
+                    <option value="paraphrase-MiniLM-L6-v2">
+                      paraphrase-MiniLM-L6-v2
+                    </option>
+                    <option value="msmarco-distilbert-base-tas-b">
+                      msmarco-distilbert-base-tas-b
+                    </option>
+
+                    <option value="paraphrase-xlm-r-multilingual-v1">
+                      paraphrase-xlm-r-multilingual-v1
+                    </option>
+                    <option value="multi-qa-mpnet-base-dot-v1">
+                      multi-qa-mpnet-base-dot-v1
+                    </option>
+                    <option value="stsb-roberta-base-v2">
+                      stsb-roberta-base-v2
+                    </option>
+                    <option value="nli-roberta-base-v2">
+                      nli-roberta-base-v2
+                    </option>
+                    <option value="nli-mpnet-base-v2">nli-mpnet-base-v2</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Upload
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
