@@ -98,18 +98,31 @@ def extract_text_from_pdf(filepath, embedding):
 
 
 def get_llm_response(query, context):
+    prompt = (
+        "Answer the question based on the Context , Question : Context:"
+        + context
+        + "EOF"
+    )
 
     # Generate text
     input_ids = tokenizer.encode(
-        "Answer the question based on the Context , Question : Prasanna Context:"
-        + context,
+        prompt,
         return_tensors="pt",
     )
     outputs = model.generate(input_ids, max_length=1995)
     print("--------------------------------llm------------------------")
+    print(prompt)
     print(tokenizer.decode(outputs[0]))
     llm_resposne_text = tokenizer.decode(outputs[0])
-    return llm_resposne_text
+    llm_resposne_text = llm_resposne_text.replace(prompt, "")
+    with open("llm_resposne_text.txt", "w") as file:
+        file.write(llm_resposne_text)
+    with open("prompt.txt", "w") as file:
+        file.write(prompt)
+    with open("context.txt", "w") as file:
+        file.write(context)
+
+    return llm_resposne_text.split("EOF")[1]
 
 
 @app.route("/query", methods=["POST"])
@@ -117,7 +130,7 @@ def query():
     global vector_db  # Indicate that we're using the global variable
     data = request.json
     query_text = data.get("query", "")
-    print("vecdb", vector_db)
+    print("vec db", vector_db)
     # Query the vector database
     if vector_db and query_text:
         results = vector_db.similarity_search(query_text, k=1)
@@ -125,6 +138,7 @@ def query():
         response = str(results) if results else "No relevant results found."
     else:
         response = "Vector database not initialized or query is empty."
+
     context = ".".join(page_content_arr)
     llm_res = get_llm_response(query_text, context)
     final_res = jsonify({"response": page_content_arr, "llm_response": llm_res})
